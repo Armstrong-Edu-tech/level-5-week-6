@@ -1,0 +1,24 @@
+import React from "react";
+import "./App.css";
+import { Component } from "react";
+
+class Welcome extends Component {
+  render() {
+    return <h1 className="heading">Hello,Welcom to my React App</h1>;
+  }
+}
+
+export function Greeting(props) {
+  return <h1 className="heading">Hello , How are you {props.name}?</h1>;
+}
+
+function App() {
+  return (
+    <div className="container">
+      <Welcome />
+      <Greeting name="Jhon" />
+    </div>
+  );
+}
+
+export default App;
