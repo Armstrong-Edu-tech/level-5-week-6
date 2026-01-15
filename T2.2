@@ -1,0 +1,13 @@
+import React from "react";
+
+// Parent component
+function Parent() {
+  return <Child name="Alice" />;
+}
+
+// Child component
+function Child(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+export default Parent;
