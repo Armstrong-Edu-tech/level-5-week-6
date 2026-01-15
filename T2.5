@@ -1,0 +1,29 @@
+// Profile.js
+import React from "react";
+import PropTypes from "prop-types";
+
+function Profile({ username, age }) {
+  return (
+    <div className="profile">
+      <h2>Username: {username}</h2>
+      <p>Age: {age}</p>
+    </div>
+  );
+}
+Profile.propTypes = {
+  username: PropTypes.string.isRequired,
+  age: PropTypes.number,
+};
+
+function App() {
+  return (
+    <div>
+      {/* Correct prop types */}
+      <Profile username="John" age={25} />
+      {/* Incorrect prop types, triggers warnings */}
+      <Profile username={123} age="twenty" />
+    </div>
+  );
+}
+
+export default App;
