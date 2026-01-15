@@ -1,0 +1,40 @@
+import React from "react";
+import "./App.css";
+
+
+
+function Header(props) {
+  return (
+    <div className="header">
+      <h2>Header Section</h2>
+      <Content username={props.username} />
+    </div>
+  );
+}
+
+function Content(props) {
+  return (
+    <div className="content">
+      <h3>Welcome, {props.username}! 👋</h3>
+      <p>This is the content area.</p>
+    </div>
+  );
+}
+
+function Footer() {
+  return (
+    <div className="footer">
+      <p>Footer © 2026</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="app">
+      <Header username="Jhon" />
+      <Footer />
+    </div>
+  );
+}
+export default App;
