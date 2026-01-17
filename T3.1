@@ -1,0 +1,26 @@
+import React from "react";
+
+class ToggleButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isOn: false };
+  }
+  toggle = () => {
+    this.setState((prevState) => ({ isOn: !prevState.isOn }));
+  };
+  render() {
+    return (
+      <button onClick={this.toggle}>{this.state.isOn ? "ON" : "OFF"}</button>
+    );
+  }
+}
+function App() {
+  return (
+    <div>
+      <h1>Toggle Button Example</h1>
+      <ToggleButton />
+    </div>
+  );
+}
+
+export default App;
