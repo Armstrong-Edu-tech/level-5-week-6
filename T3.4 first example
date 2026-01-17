@@ -1,0 +1,42 @@
+import React, { useState } from "react";
+
+function TemperatureInput({ label, value, onChange }) {
+  return (
+    <div>
+      <label>{label}: </label>
+      <input value={value} onChange={(e) => onChange(e.target.value)} />
+    </div>
+  );
+}
+
+function TemperatureConverter() {
+  const [tempC, setTempC] = useState("");
+  const [tempF, setTempF] = useState("");
+
+  function handleCelsiusChange(value) {
+    setTempC(value);
+    setTempF(value === "" ? "" : ((value * 9) / 5 + 32).toFixed(1));
+  }
+
+  function handleFahrenheitChange(value) {
+    setTempF(value);
+    setTempC(value === "" ? "" : (((value - 32) * 5) / 9).toFixed(1));
+  }
+
+  return (
+    <div>
+      <TemperatureInput
+        label="Celsius"
+        value={tempC}
+        onChange={handleCelsiusChange}
+      />
+      <TemperatureInput
+        label="Fahrenheit"
+        value={tempF}
+        onChange={handleFahrenheitChange}
+      />
+    </div>
+  );
+}
+
+export default TemperatureConverter;
