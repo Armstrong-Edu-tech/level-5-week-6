@@ -1,0 +1,159 @@
+import { useState } from "react";
+import "./App.css";
+
+function Event({ title, description, date, location, onEdit, onDelete }) {
+  return (
+    <div className="border p-4 mb-4 rounded shadow bg-white">
+      <h3 className="font-bold text-lg">{title}</h3>
+      <p>{description}</p>
+      <p className="text-sm text-gray-500">
+        {date} | {location}
+      </p>
+      <div className="mt-2 space-x-2">
+        <button onClick={onEdit} className="text-blue-600 hover:underline">
+          Edit
+        </button>
+        <button onClick={onDelete} className="text-red-600 hover:underline">
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+import { useState, useEffect } from "react";
+
+function EventForm({ onSubmit, eventToEdit, onCancel }) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    if (eventToEdit) {
+      setTitle(eventToEdit.title);
+      setDescription(eventToEdit.description);
+      setDate(eventToEdit.date);
+      setLocation(eventToEdit.location);
+    }
+  }, [eventToEdit]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit({ title, description, date, location });
+    setTitle("");
+    setDescription("");
+    setDate("");
+    setLocation("");
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mb-6 bg-white p-4 rounded shadow">
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+        className="border p-2 mb-2 w-full"
+      />
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        required
+        className="border p-2 mb-2 w-full"
+      />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        required
+        className="border p-2 mb-2 w-full"
+      />
+      <input
+        type="text"
+        placeholder="Location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        required
+        className="border p-2 mb-2 w-full"
+      />
+      <div className="flex space-x-2">
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          {eventToEdit ? "Update Event" : "Add Event"}
+        </button>
+        {eventToEdit && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="bg-gray-300 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+    </form>
+  );
+}
+
+
+
+
+function App() {
+  const [events, setEvents] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  function addEvent(newEvent) {
+    setEvents([...events, newEvent]);
+  }
+
+  function updateEvent(updatedEvent) {
+    const updatedEvents = [...events];
+    updatedEvents[editingIndex] = updatedEvent;
+    setEvents(updatedEvents);
+    setEditingIndex(null);
+  }
+
+  function deleteEvent(index) {
+    setEvents(events.filter((_, i) => i !== index));
+  }
+
+  function editEvent(index) {
+    setEditingIndex(index);
+  }
+
+  function cancelEdit() {
+    setEditingIndex(null);
+  }
+
+  return (
+    <div className="max-w-xl mx-auto p-4 bg-gray-100 min-h-screen" dir="ltr">
+      <h1 className="text-2xl font-bold mb-6">Dynamic Event Tracker</h1>
+      <EventForm
+        onSubmit={editingIndex !== null ? updateEvent : addEvent}
+        eventToEdit={editingIndex !== null ? events[editingIndex] : null}
+        onCancel={cancelEdit}
+      />
+      {events.length === 0 ? (
+        <p className="text-center text-gray-500">No events yet.</p>
+      ) : (
+        events.map((event, index) => (
+          <Event
+            key={index}
+            {...event}
+            onEdit={() => editEvent(index)}
+            onDelete={() => deleteEvent(index)}
+          />
+        ))
+      )}
+    </div>
+  );
+}
+
+export default App;
+
