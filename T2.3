@@ -1,0 +1,20 @@
+import 
+function Card({title,data}){
+return(
+<div className=”card”>
+<h2>{title}</h2>
+<p>{data}</p>
+</div>
+)
+}
+
+function Dashboard(){
+return (
+<div>
+<Card title=”Sales” data=”1000 units” />
+<Card title=”Users” data=”500 users” />
+<Card title=”Revenue” data=”$10,000” />
+</div>
+);
+}
+export default Dashboard;
